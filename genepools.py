@@ -1,13 +1,13 @@
 import numpy as np
 from typing import Union
-from Volley.genetics import Gene
+from Volley.genetics import SuperGene, Gene
 
 
 class GenePool:
     def __init__(self, amount: int):
         self.amount = amount
 
-    def generate(self):
+    def generate_genes(self, manager, name: str, n: int):
         pass
 
 
@@ -20,5 +20,11 @@ class StringPool(GenePool):
         else:
             self.alphabet = np.asarray(alphabet)
 
-    def generate(self, manager, name):
-        return Gene(np.random.choice(self.alphabet, self.amount, self.replacement), manager=manager, name=name)
+    def generate_super(self, name: str, amount_genes: int):
+        return SuperGene(self, name=name, amount_genes=amount_genes)
+
+    def generate_genes(self, super_gene, name: str, n: int):
+        genes = []
+        for i in range(n):
+            genes.append(Gene(np.random.choice(self.alphabet, self.amount, self.replacement), super_gene, name + str(i)))
+        return genes
