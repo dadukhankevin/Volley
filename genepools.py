@@ -26,5 +26,5 @@ class StringPool(GenePool):
     def generate_genes(self, super_gene, name: str, n: int):
         genes = []
         for i in range(n):
-            genes.append(Gene(np.random.choice(self.alphabet, self.amount, self.replacement), super_gene, name + str(i)))
+            genes.append(Gene("".join(np.random.choice(self.alphabet, self.amount, self.replacement)), super_gene, name + str(i)))
         return genes
