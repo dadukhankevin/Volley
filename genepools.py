@@ -26,5 +26,38 @@ class StringPool(GenePool):
     def generate_genes(self, super_gene, name: str, n: int):
         genes = []
         for i in range(n):
-            genes.append(Gene("".join(np.random.choice(self.alphabet, self.amount, self.replacement)), super_gene, name + str(i)))
+            genes.append(Gene("".join(np.random.choice(self.alphabet, self.amount, self.replacement)), super_gene,
+                              name + str(i)))
+        return genes
+
+
+class IntPool(GenePool):
+    def __init__(self, amount, low: int, high: int):
+        super().__init__(amount)
+        self.low = low
+        self.high = high
+
+    def generate_super(self, name: str, amount_genes: int):
+        return SuperGene(self, name=name, amount_genes=amount_genes)
+
+    def generate_genes(self, super_gene, name: str, n: int):
+        genes = []
+        for i in range(n):
+            genes.append(Gene(np.random.randint(self.low, self.high, self.amount), super_gene, name + str(i)))
+        return genes
+
+
+class FloatPool(GenePool):
+    def __init__(self, amount, low: float, high: float):
+        super().__init__(amount)
+        self.low = low
+        self.high = high
+
+    def generate_super(self, name: str, amount_genes: int):
+        return SuperGene(self, name=name, amount_genes=amount_genes)
+
+    def generate_genes(self, super_gene, name: str, n: int):
+        genes = []
+        for i in range(n):
+            genes.append(Gene(np.random.uniform(self.low, self.high, self.amount), super_gene, name + str(i)))
         return genes
